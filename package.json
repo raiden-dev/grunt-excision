@@ -1,0 +1,36 @@
+{
+  "name": "grunt-excision",
+  "version": "0.1.0",
+  "description": "Extract lines from one file into another.",
+  "homepage": "https://github.com/raiden-dev/grunt-excision",
+  "author": "Andrey Kravtsov <raidendev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/raiden-dev/grunt-excision.git"
+  },
+  "bugs": {
+    "url": "https://github.com/raiden-dev/grunt-excision/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/raiden-dev/grunt-excision/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.0"
+  },
+  "keywords": [
+    "excision",
+    "gruntplugin",
+    "lines",
+    "extract"
+  ],
+  "files": [
+    "tasks",
+    "LICENSE-MIT"
+  ]
+}
