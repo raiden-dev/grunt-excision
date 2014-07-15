@@ -1,4 +1,4 @@
-# grunt-excision v0.2.0
+# grunt-excision v1.0.0
 
 > Extract parts from one file into another.
 
@@ -32,27 +32,41 @@ _Run this task with the `grunt excision` command._
 excision: {
   utils: {
     options: {
-      lines: {
-        'bower_components/lodash/dist/lodash.js': [4321, 4374],
-        'bower_components/lodash/dist/lodash.underscore.js': [1007, 1050]
-      },
-      bytes: {
-        'bower_components/lodash/dist/lodash.js': [1052, 1320],
-        'bower_components/lodash/dist/lodash.underscore.js': [1853, 1998]
+      ranges: {
+        'bower_components/jquery/dist/jquery.js': {    // Src file path
+          trim: { // nop
+            '2.1.1': [ // nop
+              'define(function () { var utils = {};',  // Append string
+              'var ', ['14551', '14585'], ';',         // Decimal offset
+              'var ', ['0x3e28', '0x3e86'], ';',       // Hexademical offset
+              'var tmp = {', [396, 400], '};',         // Line numbers range
+              'utils.trim = tmp.trim;'
+            ]
+          }
+        },
+        'bower_components/lodash/dist/lodash.js': {
+          defer: [
+            // Regexp match
+            /function isFunction\([\s\S]*?return[\s\S]*?\}/,
+            /function slice\([\s\S]*?return[\s\S]*?\}/,
+            'utils.defer = ', /function defer\([\s\S]*?return.*[\r\n]+.*\}/, ';',
+            'return utils; });'
+          ]
+        }
       }
     },
     files: {
       'out/utils.js': [
-        'bower_components/lodash/dist/lodash.js',
-        'bower_components/lodash/dist/lodash.underscore.js'
+        'bower_components/jquery/dist/jquery.js',
+        'bower_components/lodash/dist/lodash.js'
       ]
     }
   }
-}
 ```
 
 
 ## Release History
 
+ * 2014-07-15   v1.0.0   More flexible API; Hex/dec offsets; String appending; Regexp match; Refactoring
  * 2014-07-15   v0.2.0   Add extract bytes option
  * 2014-07-14   v0.1.0   Initial release
