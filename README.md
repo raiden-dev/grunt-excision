@@ -1,6 +1,6 @@
-# grunt-excision v0.1.0
+# grunt-excision v0.2.0
 
-> Extract lines from one file into another.
+> Extract parts from one file into another.
 
 
 ## Getting Started
@@ -54,4 +54,5 @@ excision: {
 
 ## Release History
 
+ * 2014-07-15   v0.2.0   Add extract bytes option
  * 2014-07-14   v0.1.0   Initial release
