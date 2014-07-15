@@ -33,8 +33,12 @@ excision: {
   utils: {
     options: {
       lines: {
-        'bower_components/lodash/dist/lodash.js': [4321, 4375],
+        'bower_components/lodash/dist/lodash.js': [4321, 4374],
         'bower_components/lodash/dist/lodash.underscore.js': [1007, 1050]
+      },
+      bytes: {
+        'bower_components/lodash/dist/lodash.js': [1052, 1320],
+        'bower_components/lodash/dist/lodash.underscore.js': [1853, 1998]
       }
     },
     files: {

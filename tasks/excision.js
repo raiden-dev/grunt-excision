@@ -15,14 +15,23 @@ module.exports = function (grunt) {
       filePair.src.forEach(function (src) {
         var contents = grunt.file.read(src),
             lines = contents.split('\n'),
-            range = options.lines[src];
+            linesRange = options.lines[src],
+            bytesRange = options.bytes[src];
 
-        if (grunt.util.kindOf(range) === 'array') {
-          results += lines.slice(range[0] - 1, range[1])
+        if (grunt.util.kindOf(linesRange) === 'array') {
+          results += lines.slice(linesRange[0] - 1, linesRange[1])
             .join('\n');
 
           grunt.log.write('Extracting lines ');
-          grunt.log.write(range[0] + '-' + range[1]);
+          grunt.log.write(linesRange[0] + '-' + linesRange[1]);
+          grunt.log.writeln(' from file ' + src);
+        }
+
+        if (grunt.util.kindOf(bytesRange) === 'array') {
+          results += contents.slice(bytesRange[0] - 1, bytesRange[1]);
+
+          grunt.log.write('Extracting bytes ');
+          grunt.log.write(bytesRange[0] + '-' + bytesRange[1]);
           grunt.log.writeln(' from file ' + src);
         }
       });
