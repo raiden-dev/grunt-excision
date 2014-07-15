@@ -1,7 +1,7 @@
 {
   "name": "grunt-excision",
   "version": "0.2.0",
-  "description": "Extract lines from one file into another.",
+  "description": "Extract parts from one file into another.",
   "homepage": "https://github.com/raiden-dev/grunt-excision",
   "author": "Andrey Kravtsov <raidendev@gmail.com>",
   "repository": {

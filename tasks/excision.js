@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
   'use strict';
 
-  grunt.registerMultiTask('excision', 'Extract lines from one file into another.', function () {
+  grunt.registerMultiTask('excision', 'Extract parts from one file into another.', function () {
     var options = this.options();
 
     if (!options.lines) {
