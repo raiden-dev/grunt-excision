@@ -14,7 +14,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/raiden-dev/grunt-excision/blob/master/LICENSE-MIT"
+      "url": "https://github.com/raiden-dev/grunt-excision/blob/master/LICENSE"
     }
   ],
   "engines": {
