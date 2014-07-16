@@ -26,7 +26,31 @@ grunt.loadNpmTasks('grunt-contrib-copy');
 
 _Run this task with the `grunt excision` command._
 
+Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
+
+
+### Options
+
+#### ranges
+
+Type: `Object`
+
+This is the hash of source file names and ranges. _Range_ is the instruction how to match and cut the source file. There are several types:
+
+Type | Example |  Match
+-----|---------|-------
+String | `'Some text'` | No match. Just string append
+Array of Strings | `['14551', '14585']` | Match by decimal offset from start of the file
+Array of Strings | `['0x3e28', '0x3e86']` | Match by hexademical offset from start of the file
+Array of Numbers | `[396, 400]` | Match by line numbers
+RegExp | `/function slice\([\s\S]*?return[\s\S]*?\}/` | Match by regular expression
+
+Everything else is nothing more than a syntax sugar. You can construct as much insane as you want: objects inside arrays that contains arrays of objects that contains ranges, etc.
+
+
 ### Usage Examples
+
+Below is the semi-reallife example of task for building `utils` amd module which includes jquery's `trim` and lodash's `defer` functions. Task includes almost every excision's feature just in demonstration purposes, please use it responsibly.
 
 ```js
 excision: {
@@ -63,6 +87,8 @@ excision: {
     }
   }
 ```
+
+Feel free to contact me through email or issues for any questions.
 
 
 ## Release History
