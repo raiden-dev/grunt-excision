@@ -1,4 +1,7 @@
 module.exports.init = function (grunt) {
+  'use strict';
+
+  var esprima = require('esprima');
 
   function sliceByLines(str, range) {
     range = range || [];
@@ -40,59 +43,101 @@ module.exports.init = function (grunt) {
       else if (grunt.util.kindOf(range) === 'array') {
         // Must be offset
         if (grunt.util.kindOf(range[0]) === 'string') {
-          this.log('processing_bytes', { offset: range });
           results += sliceByBytes(contents, range);
+          this.log('processed_bytes', { offset: range });
         }
         // Must be line numbers
         else {
-          this.log('processing_lines', { range: range });
           results += sliceByLines(contents, range);
+          this.log('processed_lines', { range: range });
         }
       }
       else if (grunt.util.kindOf(range) === 'regexp') {
         // Regexp match
-        this.log('processing_regexp', { regexp: range });
         results += sliceByRegexp(contents, range);
+        this.log('processed_regexp', { regexp: range });
       }
       else if (grunt.util.kindOf(range) === 'string') {
         // Append string
-        this.log('processing_string', { str: range });
         results += range;
+        this.log('processed_string', { str: range });
       }
 
       return results;
     },
 
+    validate: function (results, lang) {
+      // Validate JS by default
+      lang = (lang) ? lang.toUpperCase() : 'JS';
+
+      var syntax,
+          errors = [];
+
+      switch (lang) {
+        case 'JS':
+        case 'JAVASCRIPT':
+          try {
+            // Esprima's tolerant option is for collecting errors array
+            syntax = esprima.parse(results, { tolerant: true });
+
+            if (syntax.errors.length === 0) {
+              this.log('valid');
+            }
+            else {
+              errors = syntax.errors;
+              this.log('invalid', { errors: errors });
+            }
+          }
+          catch (e) {
+            errors.push(e);
+            this.log('invalid', { errors: errors });
+          }
+
+          break;
+      }
+
+      return errors;
+    },
+
     log: function (key, data) {
       switch (key) {
-        case 'processing_lines':
+        case 'processed_lines':
           grunt.verbose.write('Extracting lines ');
           grunt.verbose.write(data.range[0] + '-' + data.range[1]);
           grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
           break;
 
-        case 'processing_bytes':
+        case 'processed_bytes':
           grunt.verbose.write('Extracting bytes ');
           grunt.verbose.write(data.offset[0] + '-' + data.offset[1]);
           grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
           break;
 
-        case 'processing_regexp':
+        case 'processed_regexp':
           grunt.verbose.write('Matching by regexp ');
           grunt.verbose.write(data.regexp);
           grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
           break;
 
-        case 'processing_string':
+        case 'processed_string':
           grunt.verbose.write('Appending string "');
           grunt.verbose.write(data.str + '"');
           grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
           break;
 
+        case 'valid':
+          grunt.verbose.write('Validating code');
+          grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
+          break;
+
+        case 'invalid':
+          data.errors.forEach(function (e) {
+            grunt.log.error(e.message);
+          });
+          break;
+
         case 'done':
-          grunt.log.write('File ');
-          grunt.log.write(grunt.log.wordlist([data.dest]));
-          grunt.log.writeln(' created.');
+          grunt.log.ok('File ' + grunt.log.wordlist([data.dest]) + ' created.');
           break;
       }
     }

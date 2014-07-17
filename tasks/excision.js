@@ -12,7 +12,8 @@ module.exports = function (grunt) {
 
     this.files.forEach(function (filePair) {
       var dest = filePair.dest,
-          results = '';
+          results = '',
+          errors = [];
 
       filePair.src.forEach(function (src) {
         var contents = grunt.file.read(src),
@@ -20,6 +21,14 @@ module.exports = function (grunt) {
 
         results += excision.process(range, contents);
       });
+
+      if (options.validate) {
+        errors = excision.validate(results, options.validate.lang);
+
+        if (errors.length && !options.validate.tolerant) {
+          return;
+        }
+      }
 
       grunt.file.write(dest, results);
       excision.log('done', { dest: dest });
