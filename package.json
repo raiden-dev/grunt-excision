@@ -35,5 +35,8 @@
   "files": [
     "tasks",
     "LICENSE"
-  ]
+  ],
+  "dependencies": {
+    "esprima": "^1.2.2"
+  }
 }
