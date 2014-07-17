@@ -27,10 +27,13 @@
     "excision",
     "gruntplugin",
     "lines",
+    "offset",
+    "regexp",
+    "slice",
     "extract"
   ],
   "files": [
     "tasks",
-    "LICENSE-MIT"
+    "LICENSE"
   ]
 }
