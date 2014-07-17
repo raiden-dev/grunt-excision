@@ -1,4 +1,4 @@
-# grunt-excision v1.0.0
+# grunt-excision v1.0.2
 
 > Extract parts from one file into another.
 
@@ -93,6 +93,7 @@ Feel free to contact me through email or issues for any questions.
 
 ## Release History
 
+ * 2014-07-17   v1.0.2   Refactoring: divide the task and the lib
  * 2014-07-15   v1.0.0   More flexible API; Hex/dec offsets; String appending; Regexp match; Refactoring
  * 2014-07-15   v0.2.0   Add extract bytes option
  * 2014-07-14   v0.1.0   Initial release
