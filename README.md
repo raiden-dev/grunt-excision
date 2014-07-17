@@ -31,17 +31,17 @@ Task targets, files and options may be specified according to the grunt [Configu
 
 ### Options
 
-### validate
+#### validate
 
 Type: `Object`
 
-#### lang
+##### lang
 
 Type: `String`
 
 Language for validating. JavaScript by default and now only supported.
 
-#### tolerant
+##### tolerant
 
 Type: `Boolean`
 
