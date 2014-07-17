@@ -1,4 +1,4 @@
-# grunt-excision v1.0.2
+# grunt-excision v1.1.0
 
 > Extract parts from one file into another.
 
@@ -31,6 +31,22 @@ Task targets, files and options may be specified according to the grunt [Configu
 
 ### Options
 
+### validate
+
+Type: `Object`
+
+#### lang
+
+Type: `String`
+
+Language for validating. JavaScript by default and now only supported.
+
+#### tolerant
+
+Type: `Boolean`
+
+If true, writes destination file despite the validation errors. Useful for debug.
+
 #### ranges
 
 Type: `Object`
@@ -56,6 +72,10 @@ Below is the semi-reallife example of task for building `utils` amd module which
 excision: {
   utils: {
     options: {
+      validate: {
+        lang: 'js',     // Language for validating (now only JS)
+        tolerant: true  // Write dest file despite the errors?
+      },
       ranges: {
         'bower_components/jquery/dist/jquery.js': {    // Src file path
           trim: { // nop
@@ -93,6 +113,7 @@ Feel free to contact me through email or issues for any questions.
 
 ## Release History
 
+ * 2014-07-17   v1.1.0   Add `validate` option; Add [Esprima](http://esprima.org/) for validating JS
  * 2014-07-17   v1.0.2   Refactoring: divide the task and the lib
  * 2014-07-15   v1.0.0   More flexible API; Hex/dec offsets; String appending; Regexp match; Refactoring
  * 2014-07-15   v0.2.0   Add extract bytes option
