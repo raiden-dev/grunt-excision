@@ -1,4 +1,4 @@
-# grunt-excision v1.1.0
+# grunt-excision v1.2.0
 
 > Extract parts from one file into another.
 
@@ -38,8 +38,9 @@ Type: `Object`
 ##### lang
 
 Type: `String`
+Values: `[js] | css`
 
-Language for validating. JavaScript by default and now only supported.
+Language for validating. JavaScript by default.
 
 ##### tolerant
 
@@ -73,8 +74,8 @@ excision: {
   utils: {
     options: {
       validate: {
-        lang: 'js',     // Language for validating (now only JS)
-        tolerant: true  // Write dest file despite the errors?
+        lang: 'js',     // Language for validating (js|css, default: js)
+        tolerant: true  // Write dest file despite the errors? (default: false)
       },
       ranges: {
         'bower_components/jquery/dist/jquery.js': {    // Src file path
@@ -105,7 +106,24 @@ excision: {
         'bower_components/lodash/dist/lodash.js'
       ]
     }
+  },
+  bootstrap: {
+    options: {
+      validate: {
+        lang: 'css'  // Validate CSS syntax
+      },
+      ranges: {
+        'bower_components/bootstrap/dist/css/bootstrap.css': {  // Src file path
+          grid: [1420, 2059],                                   // Line numbers range
+          table: [2060, 2293]                                   // Line numbers range
+        }
+      }
+    },
+    files: {
+      'out/bootstrap.css': 'bower_components/bootstrap/dist/css/bootstrap.css'
+    }
   }
+}
 ```
 
 Feel free to contact me through email or issues for any questions.
@@ -113,6 +131,7 @@ Feel free to contact me through email or issues for any questions.
 
 ## Release History
 
+ * 2014-07-18   v1.2.0   Add [CSSLint](https://github.com/CSSLint/csslint) for validating CSS
  * 2014-07-17   v1.1.0   Add `validate` option; Add [Esprima](http://esprima.org/) for validating JS
  * 2014-07-17   v1.0.2   Refactoring: divide the task and the lib
  * 2014-07-15   v1.0.0   More flexible API; Hex/dec offsets; String appending; Regexp match; Refactoring
