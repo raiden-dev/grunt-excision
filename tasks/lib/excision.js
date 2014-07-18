@@ -1,7 +1,9 @@
 module.exports.init = function (grunt) {
   'use strict';
 
+  var _ = require('lodash');
   var esprima = require('esprima');
+  var csslint = require('csslint').CSSLint;
 
   function sliceByLines(str, range) {
     range = range || [];
@@ -66,7 +68,7 @@ module.exports.init = function (grunt) {
       return results;
     },
 
-    validate: function (results, lang) {
+    validate: function (contents, lang) {
       // Validate JS by default
       lang = (lang) ? lang.toUpperCase() : 'JS';
 
@@ -78,7 +80,7 @@ module.exports.init = function (grunt) {
         case 'JAVASCRIPT':
           try {
             // Esprima's tolerant option is for collecting errors array
-            syntax = esprima.parse(results, { tolerant: true });
+            syntax = esprima.parse(contents, { tolerant: true });
 
             if (syntax.errors.length === 0) {
               this.log('valid');
@@ -90,6 +92,19 @@ module.exports.init = function (grunt) {
           }
           catch (e) {
             errors.push(e);
+            this.log('invalid', { errors: errors });
+          }
+
+          break;
+
+        case 'CSS':
+          syntax = csslint.verify(contents);
+          errors = _.where(syntax.messages, { type: 'error' });
+
+          if (errors.length === 0) {
+            this.log('valid');
+          }
+          else {
             this.log('invalid', { errors: errors });
           }
 
@@ -126,7 +141,7 @@ module.exports.init = function (grunt) {
           break;
 
         case 'valid':
-          grunt.verbose.write('Validating code');
+          grunt.verbose.write('Syntax validation');
           grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
           break;
 
