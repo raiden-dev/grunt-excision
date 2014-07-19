@@ -67,7 +67,9 @@ Everything else is nothing more than a syntax sugar. You can construct as much i
 
 ### Usage Examples
 
-Below is the semi-reallife example of task for building `utils` amd module which includes jquery's `trim` and lodash's `defer` functions. Task includes almost every excision's feature just in demonstration purposes, please use it responsibly.
+Below is the two semi-reallife examples.
+
+First one is the task for building `utils` amd module which includes jquery's `trim` and lodash's `defer` functions. Task includes almost every excision's feature just in demonstration purposes, please use it responsibly.
 
 ```js
 excision: {
@@ -106,7 +108,14 @@ excision: {
         'bower_components/lodash/dist/lodash.js'
       ]
     }
-  },
+  }
+}
+```
+
+Second task builds custom css framework based on bootstrap. Imagine that we don't want whole bootsrap lib on production because it's too complex and large, we need only grid system and tables.
+
+```js
+excision: {
   bootstrap: {
     options: {
       validate: {
