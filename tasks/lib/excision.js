@@ -1,9 +1,9 @@
+var _ = require('lodash'),
+    esprima = require('esprima'),
+    csslint = require('csslint').CSSLint;
+
 module.exports.init = function (grunt) {
   'use strict';
-
-  var _ = require('lodash');
-  var esprima = require('esprima');
-  var csslint = require('csslint').CSSLint;
 
   function sliceByLines(str, range) {
     range = range || [];
