@@ -26,6 +26,10 @@ module.exports.init = function (grunt) {
     return (matched) ? matched[0] : '';
   }
 
+  function colorize(words, color) {
+    return grunt.log.wordlist(words, { color: color });
+  }
+
   return {
     process: function (range, contents) {
       var results = '';
@@ -119,30 +123,30 @@ module.exports.init = function (grunt) {
         case 'processed_lines':
           grunt.verbose.write('Extracting lines ');
           grunt.verbose.write(data.range[0] + '-' + data.range[1]);
-          grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
+          grunt.verbose.writeln('...' + colorize(['OK'], 'green'));
           break;
 
         case 'processed_bytes':
           grunt.verbose.write('Extracting bytes ');
           grunt.verbose.write(data.offset[0] + '-' + data.offset[1]);
-          grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
+          grunt.verbose.writeln('...' + colorize(['OK'], 'green'));
           break;
 
         case 'processed_regexp':
           grunt.verbose.write('Matching by regexp ');
           grunt.verbose.write(data.regexp);
-          grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
+          grunt.verbose.writeln('...' + colorize(['OK'], 'green'));
           break;
 
         case 'processed_string':
           grunt.verbose.write('Appending string "');
           grunt.verbose.write(data.str + '"');
-          grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
+          grunt.verbose.writeln('...' + colorize(['OK'], 'green'));
           break;
 
         case 'valid':
           grunt.verbose.write('Syntax validation');
-          grunt.verbose.writeln('...' + grunt.log.wordlist(['OK'], { color:'green' }));
+          grunt.verbose.writeln('...' + colorize(['OK'], 'green'));
           break;
 
         case 'invalid':
@@ -152,7 +156,7 @@ module.exports.init = function (grunt) {
           break;
 
         case 'done':
-          grunt.log.ok('File ' + grunt.log.wordlist([data.dest]) + ' created.');
+          grunt.log.ok('File ' + colorize([data.dest]) + ' created.');
           break;
       }
     }
