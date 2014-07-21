@@ -6,8 +6,8 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('excision', 'Extract parts from one file into another.', function () {
     var options = this.options();
 
-    if (!options.lines) {
-      options.lines = {};
+    if (!options.ranges) {
+      options.ranges = {};
     }
 
     this.files.forEach(function (filePair) {
