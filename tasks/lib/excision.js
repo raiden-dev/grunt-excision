@@ -31,22 +31,22 @@ module.exports.init = function (grunt) {
   }
 
   return {
-    process: function (range, contents) {
+    process: function (contents, range) {
       var results = '';
 
       if (grunt.util.kindOf(range) === 'object') {
         // Go deeper
         grunt.util._.each(range, function (innerRange) {
-          results += this.process(innerRange, contents);
+          results += this.process(contents, innerRange);
         }.bind(this));
       }
-      else if (grunt.util.kindOf(range) === 'array' && range.length > 2) {
+      else if (grunt.util.kindOf(range) === 'array' && range.length !== 2) {
         // Go much deeper
         range.forEach(function (innerRange) {
-          results += this.process(innerRange, contents);
+          results += this.process(contents, innerRange);
         }.bind(this));
       }
-      else if (grunt.util.kindOf(range) === 'array') {
+      else if (grunt.util.kindOf(range) === 'array' && range.length == 2) {
         // Must be offset
         if (grunt.util.kindOf(range[0]) === 'string') {
           results += sliceByBytes(contents, range);

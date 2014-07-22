@@ -19,7 +19,7 @@ module.exports = function (grunt) {
         var contents = grunt.file.read(src),
             range = options.ranges[src];
 
-        results += excision.process(range, contents);
+        results += excision.process(contents, range);
       });
 
       if (options.validate) {
