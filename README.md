@@ -138,6 +138,7 @@ excision: {
 
 Next one demonstrates the experimental feature, extracting things from JS file by their AST names. Here is the example of extracting `isArray` function from lodash. Unfortunately now we don't support automatic scope collecting and this needs to be done manually.
 
+```js
 excision: {
   experimental: {
     options: {
@@ -159,6 +160,7 @@ excision: {
     }
   }
 }
+```
 
 Feel free to contact me through email or issues for any questions.
 
