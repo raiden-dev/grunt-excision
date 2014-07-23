@@ -1,4 +1,4 @@
-# grunt-excision v1.2.0
+# grunt-excision v1.3.0
 
 > Extract parts from one file into another.
 
@@ -61,15 +61,16 @@ Array of Strings | `['14551', '14585']` | Match by decimal offset from start of 
 Array of Strings | `['0x3e28', '0x3e86']` | Match by hexademical offset from start of the file
 Array of Numbers | `[396, 400]` | Match by line numbers
 RegExp | `/function slice\([\s\S]*?return[\s\S]*?\}/` | Match by regular expression
+String | `@functionName` | Match by AST name
 
 Everything else is nothing more than a syntax sugar. You can construct as much insane as you want: objects inside arrays that contains arrays of objects that contains ranges, etc.
 
 
 ### Usage Examples
 
-Below is the two semi-reallife examples.
+Below is several semi-reallife examples.
 
-First one is the task for building `utils` amd module which includes jquery's `trim` and lodash's `defer` functions. Task includes almost every excision's feature just in demonstration purposes, please use it responsibly.
+First one is the task for building `utils` AMD module which includes jquery's `trim` and lodash's `defer` functions. Task includes almost every excision's feature just in demonstration purposes, please use it responsibly.
 
 ```js
 excision: {
@@ -135,11 +136,36 @@ excision: {
 }
 ```
 
+Next one demonstrates the experimental feature, extracting things from JS file by their AST names. Here is the example of extracting `isArray` function from lodash. Unfortunately now we don't support automatic scope collecting and this needs to be done manually.
+
+excision: {
+  experimental: {
+    options: {
+      validate: true,
+      ranges: {
+        'bower_components/lodash/dist/lodash.js': [
+          '@isNative',                    // AST name
+          'var ', '@objectProto',   ';',  // (internal dependency)
+          'var ', '@toString',      ';',  // (internal dependency)
+          'var ', '@arrayClass',    ';',  // (internal dependency)
+          'var ', '@reNative',      ';',  // (internal dependency)
+          'var ', '@nativeIsArray', ';',  // (internal dependency)
+          'var ', '@isArray',       ';'   // Yeah, finally got it
+        ]
+      }
+    },
+    files: {
+      'out/experimental.js': 'bower_components/lodash/dist/lodash.js'
+    }
+  }
+}
+
 Feel free to contact me through email or issues for any questions.
 
 
 ## Release History
 
+ * 2014-07-23   v1.3.0   Experimental feature: extract things from JS by AST names
  * 2014-07-18   v1.2.0   Add [CSSLint](https://github.com/CSSLint/csslint) for validating CSS
  * 2014-07-17   v1.1.0   Add `validate` option; Add [Esprima](http://esprima.org/) for validating JS
  * 2014-07-17   v1.0.2   Refactoring: divide the task and the lib
