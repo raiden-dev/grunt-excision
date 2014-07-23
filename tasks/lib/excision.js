@@ -1,6 +1,7 @@
 var _ = require('lodash'),
     esprima = require('esprima'),
-    csslint = require('csslint').CSSLint;
+    csslint = require('csslint').CSSLint,
+    isolate = require('./isolate');
 
 module.exports.init = function (grunt) {
   'use strict';
@@ -24,6 +25,10 @@ module.exports.init = function (grunt) {
   function sliceByRegexp(str, regexp) {
     var matched = regexp.exec(str);
     return (matched) ? matched[0] : '';
+  }
+
+  function getRangeByName(str, name) {
+    return isolate(str, name);
   }
 
   function colorize(words, color) {
@@ -64,9 +69,17 @@ module.exports.init = function (grunt) {
         this.log('processed_regexp', { regexp: range });
       }
       else if (grunt.util.kindOf(range) === 'string') {
+        // AST name
+        if (/^@/.test(range)) {
+          range = range.replace(/^@/, '');
+          this.log('processed_ast', { name: range });
+          results += this.process(contents, getRangeByName(contents, range));
+        }
         // Append string
-        results += range;
-        this.log('processed_string', { str: range });
+        else {
+          results += range;
+          this.log('processed_string', { str: range });
+        }
       }
 
       return results;
@@ -135,6 +148,12 @@ module.exports.init = function (grunt) {
         case 'processed_regexp':
           grunt.verbose.write('Matching by regexp ');
           grunt.verbose.write(data.regexp);
+          grunt.verbose.writeln('...' + colorize(['OK'], 'green'));
+          break;
+
+        case 'processed_ast':
+          grunt.verbose.write('Looking AST for ');
+          grunt.verbose.write(data.name);
           grunt.verbose.writeln('...' + colorize(['OK'], 'green'));
           break;
 
