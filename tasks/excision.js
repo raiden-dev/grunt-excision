@@ -1,13 +1,15 @@
 module.exports = function (grunt) {
-  'use strict';
+  var excision = require('./lib/excision')(grunt);
 
-  var excision = require('./lib/excision').init(grunt);
+  grunt.registerMultiTask('excision', 'Extract parts from one file into another.', task);
 
-  grunt.registerMultiTask('excision', 'Extract parts from one file into another.', function () {
+  function task(env) {
+    env = env || excision;
+
     var options = this.options();
 
-    if (!options.ranges) {
-      options.ranges = {};
+    if (grunt.util.kindOf(options.ranges) !== 'object') {
+      throw new Error('Option "ranges" must be an object');
     }
 
     this.files.forEach(function (filePair) {
@@ -19,11 +21,11 @@ module.exports = function (grunt) {
         var contents = grunt.file.read(src),
             range = options.ranges[src];
 
-        results += excision.process(contents, range);
+        results += env.process(contents, range);
       });
 
       if (options.validate) {
-        errors = excision.validate(results, options.validate.lang);
+        errors = env.validate(results, options.validate.lang);
 
         if (errors.length && !options.validate.tolerant) {
           return;
@@ -31,8 +33,9 @@ module.exports = function (grunt) {
       }
 
       grunt.file.write(dest, results);
-      excision.log('done', { dest: dest });
+      env.log('done', { dest: dest });
     });
-  });
+  }
 
+  return task;
 };
