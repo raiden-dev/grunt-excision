@@ -30,6 +30,19 @@ describe('Validation', function () {
         throw new Error('excision.validate should return empty array when no errors');
       }
     });
+
+    it('should return array with error when esprima fails tolerant parse', function () {
+      var errors = excision.validate('var x = 08', 'JS');
+
+      if (grunt.util.kindOf(errors) === 'array' &&
+          grunt.util.kindOf(errors[0]) === 'error' &&
+          errors.length === 1) {
+        return;
+      }
+      else {
+        throw new Error('excision.validate should return array with error');
+      }
+    });
   });
 
   describe('CSS', function () {
