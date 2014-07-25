@@ -5,7 +5,7 @@ var hooker = require('hooker'),
 
 grunt.log.muted = true;
 
-describe('Task options', function () {
+describe('Options', function () {
 
   describe('ranges', function () {
     it('should be processed, if is object', function () {
@@ -197,6 +197,12 @@ describe('Task options', function () {
         hooker.unhook(excision, 'process');
         if (invoked != 2) {
           throw new Error('excision.process should be invoked after excision.getRangeByName for string with leading "@"');
+        }
+      });
+
+      it('should return string as is, if is string', function () {
+        if (excision.processRange('', 'string') !== 'string') {
+          throw new Error('excision.processRange should return string as is');
         }
       });
 
