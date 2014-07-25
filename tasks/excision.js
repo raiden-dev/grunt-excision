@@ -15,7 +15,8 @@ module.exports = function (grunt) {
     this.files.forEach(function (filePair) {
       var dest = filePair.dest,
           results = '',
-          errors = [];
+          errors = [],
+          lang;
 
       filePair.src.forEach(function (src) {
         var contents = grunt.file.read(src),
@@ -25,7 +26,14 @@ module.exports = function (grunt) {
       });
 
       if (options.validate) {
-        errors = env.validate(results, options.validate.lang);
+        lang = options.validate.lang;
+
+        // Validate JS by default
+        if (!lang) {
+          lang = 'JS';
+        }
+
+        errors = env.validate(results, lang.toUpperCase());
 
         if (errors.length && !options.validate.tolerant) {
           return;

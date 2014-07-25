@@ -98,9 +98,6 @@ module.exports = function (grunt) {
     },
 
     validate: function (contents, lang) {
-      // Validate JS by default
-      lang = (lang) ? lang.toUpperCase() : 'JS';
-
       var syntax,
           errors = [];
 
