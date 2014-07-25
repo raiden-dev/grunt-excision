@@ -23,6 +23,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('default', 'mochaTest');
-  grunt.registerTask('tests', 'mochaTest');
+  grunt.registerTask('test', 'mochaTest');
 
 };
