@@ -1,4 +1,4 @@
-# grunt-excision v1.3.0 [![Build Status](https://travis-ci.org/raiden-dev/grunt-excision.png?branch=master)](https://travis-ci.org/raiden-dev/grunt-excision)
+# grunt-excision v1.3.0 [![Build Status](https://travis-ci.org/raiden-dev/grunt-excision.png?branch=master)](https://travis-ci.org/raiden-dev/grunt-excision) [![Coverage Status](https://coveralls.io/repos/raiden-dev/grunt-excision/badge.png?branch=master)](https://coveralls.io/r/raiden-dev/grunt-excision?branch=master)
 
 > Extract parts from one file into another.
 
