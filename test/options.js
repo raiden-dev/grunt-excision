@@ -281,6 +281,42 @@ describe('Task options', function () {
         }
       });
     });
+
+    describe('lang', function () {
+      it('should be case insensitive', function () {
+        var env = excision,
+            valid = false;
+
+        env.validate = function (contents, lang) {
+          if (lang === 'JAVASCRIPT') {
+            valid = true;
+          }
+
+          return [new Error()];
+        };
+
+        task.call({
+          options: function () {
+            return {
+              validate: {
+                lang: 'JavaScRipT'
+              },
+              ranges: {}
+            };
+          },
+          files: [
+            {
+              dest: '',
+              src: []
+            }
+          ]
+        }, env);
+
+        if (!valid) {
+          throw new Error('Should be uppercased before passing to excision.validate');
+        }
+      });
+    });
   });
 
 });
