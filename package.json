@@ -21,7 +21,8 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "ci": "grunt ci"
   },
   "peerDependencies": {
     "grunt": "~0.4.0"
