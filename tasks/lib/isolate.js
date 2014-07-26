@@ -1,10 +1,10 @@
 var _ = require('lodash'),
     esprima = require('esprima'),
-    Runner = require('./runner');
+    Seeker = require('./seeker');
 
 function isolate(contents, name) {
   var ast = esprima.parse(contents, { range: true }),
-      root = new Runner(ast),
+      root = new Seeker(ast),
       node = null,
       ranges = [];
 

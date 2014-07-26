@@ -1,4 +1,4 @@
-function Runner(tree) {
+function Seeker(tree) {
   var __tree__ = tree;
 
   this.tree = function () {
@@ -6,10 +6,10 @@ function Runner(tree) {
   };
 }
 
-Runner.prototype = {
+Seeker.prototype = {
   find: function (query) {
     var found = find(this.tree(), query);
-    return new Runner(found);
+    return new Seeker(found);
   }
 };
 
@@ -36,4 +36,4 @@ function find(tree, query, found) {
   return found;
 }
 
-module.exports = Runner;
+module.exports = Seeker;
