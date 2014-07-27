@@ -31,8 +31,9 @@
     "excision",
     "gruntplugin",
     "lines",
-    "offset",
+    "range",
     "regexp",
+    "ast",
     "slice",
     "extract"
   ],
