@@ -37,7 +37,7 @@ Type: `Object`
 
 ##### lang
 
-Type: `String`
+Type: `String`  
 Values: `[js] | css`
 
 Language for validating. JavaScript by default.
